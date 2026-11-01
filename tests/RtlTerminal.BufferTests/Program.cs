@@ -19,7 +19,10 @@ var tests = new (string Name, Action Run)[]
     ("wide characters can be erased and overwritten", WideErase),
     ("snapshot rows are reused without hiding edits", SnapshotReuse),
     ("resize reflows shell history without losing text, styles or graphemes", ResizeReflow),
-    ("dropped Windows paths become WSL paths", DroppedPathsBecomeWslPaths)
+    ("dropped Windows paths become WSL paths", DroppedPathsBecomeWslPaths),
+    ("DCS capability queries strictly sanitize input and block command injection", DcsCapabilitySanitization),
+    ("OSC directory reports reject remote UNC paths to prevent NTLM disclosure", RemoteUncPathsAreRejected),
+    ("process arguments escape trailing backslashes and double quotes safely", CommandLineArgumentEscapingIsSecure)
 };
 
 var failures = new List<string>();
@@ -408,4 +411,36 @@ static void DroppedPathsBecomeWslPaths()
             Assert(process.ExitCode==0 && value==path,"PowerShell did not round-trip special-character path literally");
         }
     }
+}
+
+
+static void DcsCapabilitySanitization()
+{
+    var buffer = new TerminalBuffer(40, 5);
+    var valid = buffer.Process("\x1bP+q636f\x1b\\");
+    Assert(valid.Responses.Any(r => r == "\x1bP0+r636f\x1b\\"), "valid hex DCS query was not answered");
+
+    var invalid = buffer.Process("\x1bP+qecho vulnerable\x1b\\\x1bP+q;calc.exe;\x1b\\");
+    Assert(!invalid.Responses.Any(r => r.Contains("echo") || r.Contains("calc")), "malicious DCS query was not sanitized");
+}
+
+static void RemoteUncPathsAreRejected()
+{
+    var buffer = new TerminalBuffer(40, 5);
+    var remoteSnapshot = buffer.Process("\x1b]9;9;\"\\\\attacker.com\\share\"\x07");
+    Assert(remoteSnapshot.WorkingDirectory is null || !remoteSnapshot.WorkingDirectory.StartsWith(@"\\attacker.com"),
+        "OSC 9 accepted remote UNC path");
+
+    var wslSnapshot = buffer.Process("\x1b]9;9;\"\\\\wsl.localhost\\Ubuntu\\home\\user\"\x07");
+    Assert(wslSnapshot.WorkingDirectory == @"\\wsl.localhost\Ubuntu\home\user",
+        "OSC 9 rejected safe WSL UNC path");
+}
+
+static void CommandLineArgumentEscapingIsSecure()
+{
+    var escapedPath = ShellPath.WindowsArgument(@"C:\Program Files\RtlTerminal\");
+    Assert(escapedPath == "\"C:\\Program Files\\RtlTerminal\\\\\"", $"trailing backslash was not escaped: {escapedPath}");
+
+    var escapedQuotes = ShellPath.WindowsArgument("hello \"world\"");
+    Assert(escapedQuotes == "\"hello \\\"world\\\"\"", $"embedded quotes were not escaped: {escapedQuotes}");
 }

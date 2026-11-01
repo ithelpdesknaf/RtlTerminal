@@ -30,8 +30,11 @@
 
     <UseWPF>true</UseWPF>
 
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Deterministic>true</Deterministic>
+    <HighEntropyVA>true</HighEntropyVA>
   </PropertyGroup>
 
   <ItemGroup>

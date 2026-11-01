@@ -89,7 +89,7 @@ internal static class ConPtyPersianProbe
         });
         var args = Environment.GetCommandLineArgs();
         var codex = Array.IndexOf(args, "--codex-probe");
-        string Quote(string value) => "\"" + value.Replace("\"", "\\\"") + "\"";
+        string Quote(string value) => ShellPath.WindowsArgument(value);
         var command = "dotnet " + Quote(typeof(ConPtyPersianProbe).Assembly.Location) + " --conpty-child";
         if (codex >= 0)
         {

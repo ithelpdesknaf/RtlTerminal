@@ -45,10 +45,7 @@ Name: "{group}\Uninstall Rtl Terminal"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\Rtl Terminal"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{%USERPROFILE}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#AppExeName}"; WorkingDir: "{%USERPROFILE}"; Description: "Launch Rtl Terminal"; Flags: nowait postinstall skipifsilent
-
-[UninstallDelete]
-Type: filesandordirs; Name: "{app}"
+Filename: "{app}\{#AppExeName}"; WorkingDir: "{%USERPROFILE}"; Description: "Launch Rtl Terminal"; Flags: nowait postinstall skipifsilent runasoriginaluser
 
 [UninstallRun]
 Filename: "{sys}\reg.exe"; Parameters: "delete ""HKCU\Software\Classes\Directory\shell\RtlTerminal"" /f"; Flags: runhidden

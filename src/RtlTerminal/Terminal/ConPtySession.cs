@@ -117,14 +117,12 @@ private const int PROC_THREAD_ATTRIBUTE_PSEUDOCONSOLE = 0x00020016;
 
 
 
+        var varSize = IntPtr.Zero;
         InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0, ref varSize);
 
         _attributeList = Marshal.AllocHGlobal(varSize);
 
-
-
         if (!InitializeProcThreadAttributeList(_attributeList, 1, 0, ref varSize))
-
             throw new Win32Exception(Marshal.GetLastWin32Error());
 
 
@@ -306,8 +304,6 @@ private const int PROC_THREAD_ATTRIBUTE_PSEUDOCONSOLE = 0x00020016;
     }
 
 
-
-    private static IntPtr varSize = IntPtr.Zero;
 
 
 

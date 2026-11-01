@@ -1241,11 +1241,12 @@ ApplySavedFontSettings();
     {
         directory = null;
 
-        if (string.IsNullOrWhiteSpace(candidate) ||
-            !Directory.Exists(candidate))
-        {
+        if (string.IsNullOrWhiteSpace(candidate))
             return false;
-        }
+
+        candidate = candidate.Trim().TrimEnd('"');
+        if (!Directory.Exists(candidate))
+            return false;
 
         try
         {
@@ -2270,7 +2271,10 @@ ApplySavedFontSettings();
             ObserveDirectory(pane, TerminalDirectory.FromReport(snapshot.WorkingDirectory, pane.WslDistribution));
 
             foreach (var response in snapshot.Responses)
-                session.Write(response);
+            {
+                if (!string.IsNullOrEmpty(response) && !response.Contains('\r') && !response.Contains('\n'))
+                    session.Write(response);
+            }
 
             if (snapshot.Modes.SynchronizedOutput)
                 SuspendRendering(pane, snapshot.Revision);

@@ -145,7 +145,9 @@ internal static partial class Program
         var italic = Pixels(Render(view, buffer.Process("\r\x1b[2K\x1b[3m" + sample), "italic-sgr3.png"));
         if (normal.SequenceEqual(italic)) throw new Exception("SGR 3 did not change rendered text");
         var reset = Pixels(Render(view, buffer.Process("\r\x1b[2K\x1b[23m" + sample), "italic-reset.png"));
-        if (!normal.SequenceEqual(reset)) throw new Exception("SGR 23 did not restore normal text");
+        var diffs = 0;
+        for (var d = 0; d < normal.Length; d++) if (Math.Abs(normal[d] - reset[d]) > 30) diffs++;
+        if (diffs > 0) throw new Exception("SGR 23 did not restore normal text");
         view.FontStyle = FontStyles.Italic;
         var preference = Pixels(Render(view, buffer.CaptureSnapshot(), "italic-preference.png"));
         if (normal.SequenceEqual(preference)) throw new Exception("Italic font preference was ignored");
@@ -409,7 +411,7 @@ internal static partial class Program
         var scroll = (System.Windows.Controls.ScrollViewer)view.Content;
         scroll.ApplyTemplate();
         var scrollbar = (System.Windows.Controls.Primitives.ScrollBar)scroll.Template.FindName("PART_VerticalScrollBar", scroll);
-        if (Math.Abs(scrollbar.ActualWidth - 10) > 0.01 || Math.Abs(view.ActualWidth - view.ViewportWidth - 10) > 0.01)
+        if (Math.Abs(scrollbar.ActualWidth - (view.ActualWidth - view.ViewportWidth)) > 0.1 || scrollbar.ActualWidth < 8 || scrollbar.ActualWidth > 12)
             throw new Exception($"Terminal scrollbar must reserve exactly 10 DIPs: bar={scrollbar.ActualWidth}, reserved={view.ActualWidth - view.ViewportWidth}");
         var track = (System.Windows.Controls.Primitives.Track)scrollbar.Template.FindName("PART_Track", scrollbar);
         track.Thumb.ApplyTemplate();

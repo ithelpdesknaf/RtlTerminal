@@ -303,5 +303,7 @@ Zoom out|کوچک‌نمایی|تصغير
 Reset zoom|بازنشانی بزرگ‌نمایی|إعادة تعيين الحجم
 PowerShell 7|پاورشل ۷|PowerShell 7
 Git Bash|گیت بش|Git Bash
+Compact mode|حالت فشرده|الوضع المضغوط
+Shell active|ترمینال فعال است|الطرفية نشطة
 """;
 }

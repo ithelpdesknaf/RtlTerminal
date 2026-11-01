@@ -613,6 +613,9 @@
                       Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.3" />
             </Viewbox>
         </Button>
+        <Button x:Name="ZenModeButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="CompactModeMenuItem_Click" ToolTip="{local:UiText Key='Compact mode'}" AutomationProperties.Name="{local:UiText Key='Compact mode'}"><Path Width="11" Height="11" Data="M1,2 L10,2 M1,9 L10,9 M2.5,1 L2.5,10 M8.5,1 L8.5,10" StrokeThickness="1.1" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/></Button>
+        <Button x:Name="QuickThemeButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="ThemeMenuItem_Click" ToolTip="{local:UiText Key='_Theme...'}" AutomationProperties.Name="{local:UiText Key='_Theme...'}"><Path Width="11" Height="11" Data="M1,5.5 C1,3 3,1 5.5,1 C8,1 10,3 10,5.5 C10,7.5 8.5,9 7,9 L6,9 C5.5,9 5,9.5 5,10 C5,10.2 5.1,10.5 5.3,10.7 C2.8,10.5 1,8.5 1,5.5 Z" StrokeThickness="1.1" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Fill="Transparent"/></Button>
+        <Button x:Name="QuickFindButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="FindMenuItem_Click" ToolTip="{local:UiText Key='Find...'}" AutomationProperties.Name="{local:UiText Key='Find...'}"><Path Width="11" Height="11" Data="M4.5,1.5 A3,3 0 1 1 4.5,7.5 A3,3 0 1 1 4.5,1.5 M6.8,6.8 L10,10" StrokeThickness="1.2" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/></Button>
         <Grid ClipToBounds="True">
         <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Height="28" FontFamily="Segoe UI" FontSize="12"
@@ -727,11 +730,12 @@
                 </Style>
             </Button.Style>
             <Grid>
-                <Grid.ColumnDefinitions><ColumnDefinition Width="17"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="17"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/></Grid.ColumnDefinitions>
                 <Path Width="12" Height="10" Opacity="0.8" Stretch="Uniform" Data="M0,2 L0,12 L16,12 L16,4 L8,4 L6,1 L0,1 Z"
                       Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.2" VerticalAlignment="Center"/>
                 <TextBlock x:Name="ActiveDirectoryText" Grid.Column="1" Text="…" FontSize="12" FontWeight="Normal" VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis" FlowDirection="LeftToRight"/>
+                <Border Grid.Column="2" Width="6" Height="6" CornerRadius="3" Background="#10b981" Margin="3,0,0,0" VerticalAlignment="Center" ToolTip="{local:UiText Key='Shell active'}" />
             </Grid>
         </Button>
         </Grid>

@@ -355,6 +355,12 @@ ApplySavedFontSettings();
 
         var controlPressed = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
         var shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+        if (controlPressed && shiftPressed && GetEffectiveKey(e) == Key.M)
+        {
+            ToggleCompactMode();
+            e.Handled = true;
+            return;
+        }
         var key = GetEffectiveKey(e);
 
         if (controlPressed && (key == Key.OemPlus || key == Key.Add))
@@ -1876,6 +1882,19 @@ ApplySavedFontSettings();
                 Stroke = null, StrokeThickness = 0
             };
             grid.Children.Add(shape);
+            if (isActive)
+            {
+                grid.Children.Add(new Border
+                {
+                    Height = 2.5,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Margin = new Thickness(14, 0, 14, 0),
+                    CornerRadius = new CornerRadius(1.5),
+                    Background = new SolidColorBrush(AppTheme.TabAccent),
+                    IsHitTestVisible = false
+                });
+            }
             if (!isActive && tab.BackgroundColor is null) grid.Children.Add(new Border
             {
                 Width = 1, Height = 18, Background = new SolidColorBrush(AppTheme.TabSeparator),
@@ -1932,6 +1951,12 @@ ApplySavedFontSettings();
 
         var controlPressed = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
         var shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+        if (controlPressed && shiftPressed && GetEffectiveKey(e) == Key.M)
+        {
+            ToggleCompactMode();
+            e.Handled = true;
+            return;
+        }
 
         if (controlPressed && shiftPressed && e.Key == Key.C)
         {

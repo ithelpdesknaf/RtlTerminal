@@ -19,6 +19,14 @@ public partial class MainWindow
     private void OpenSearchBar()
     {
         SearchBar.Visibility = Visibility.Visible;
+        SearchBar.RenderTransform = new System.Windows.Media.TranslateTransform(0, 0);
+        var fadeIn = new System.Windows.Media.Animation.DoubleAnimation(0.0, 1.0, TimeSpan.FromMilliseconds(160));
+        var slideDown = new System.Windows.Media.Animation.DoubleAnimation(-8, 0, TimeSpan.FromMilliseconds(160))
+        {
+            EasingFunction = new System.Windows.Media.Animation.CubicEase { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut }
+        };
+        SearchBar.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+        SearchBar.RenderTransform.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty, slideDown);
         var view = ActiveView;
         if (view.HasSelection)
         {
@@ -225,6 +233,13 @@ public partial class MainWindow
     }
     private void ResetZoomMenuItem_Click(object sender, RoutedEventArgs e) => ResetFontSize();
     private void FullScreenMenuItem_Click(object sender, RoutedEventArgs e) => ToggleFullScreen();
+    private void CompactModeMenuItem_Click(object sender, RoutedEventArgs e) => ToggleCompactMode();
+    private void ToggleCompactMode()
+    {
+        MenuBarArea.Visibility = MenuBarArea.Visibility == Visibility.Visible
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+    }
 
     private void Window_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {

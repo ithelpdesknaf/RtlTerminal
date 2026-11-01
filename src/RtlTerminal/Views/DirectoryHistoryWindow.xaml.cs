@@ -10,7 +10,7 @@ public partial class DirectoryHistoryWindow : Window
     public DirectoryHistoryEntry? SelectedDirectory { get; private set; }
     public DirectoryHistoryWindow(DirectoryHistoryStore store)
     {
-        _store = store; InitializeComponent(); Refresh();
+        _store = store; InitializeComponent(); SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, false); Refresh();
     }
     private void Refresh()
     {

@@ -101,7 +101,7 @@
                                         Background="{DynamicResource MenuBackgroundBrush}"
                                         BorderBrush="{DynamicResource MenuBorderBrush}"
                                         BorderThickness="1"
-                                        CornerRadius="6">
+                                        CornerRadius="8">
                                     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                                   HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -175,7 +175,7 @@
                                         Background="{DynamicResource MenuBackgroundBrush}"
                                         BorderBrush="{DynamicResource MenuBorderBrush}"
                                         BorderThickness="1"
-                                        CornerRadius="6">
+                                        CornerRadius="8">
                                     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                                   HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -233,7 +233,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6">
+                                CornerRadius="8">
                             <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                 <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -487,16 +487,19 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border x:Name="WindowFrame">
+    <Border x:Name="WindowFrame" BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="1">
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="BorderThickness" Value="1" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                         <Setter Property="Padding" Value="8,8,8,12" />
+                        <Setter Property="BorderThickness" Value="0" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding IsFullScreen, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
                         <Setter Property="Padding" Value="0" />
+                        <Setter Property="BorderThickness" Value="0" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -543,14 +546,14 @@
                         <Button x:Name="NewTabButton" ToolTip="{local:UiText Key='New terminal (Ctrl+Shift+T)'}"
                                 Style="{StaticResource ProfileActionSegmentStyle}" Click="NewTabButton_Click"
                                 AutomationProperties.Name="{local:UiText Key='New terminal'}">
-                            <Path Width="10" Height="10" Data="M5,0 L5,10 M0,5 L10,5" StrokeThickness="1"
+                            <Path Width="10" Height="10" Data="M5,0 L5,10 M0,5 L10,5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
                         </Button>
                         <Border Grid.Column="1" Width="1" HorizontalAlignment="Left" Margin="0,6" Background="{DynamicResource ToolbarBorderBrush}" IsHitTestVisible="False"/>
                         <Button x:Name="ProfileMenuButton" Grid.Column="1" ToolTip="{local:UiText Key='Terminal profiles'}"
                                 Style="{StaticResource ProfileActionSegmentStyle}" Click="ProfileMenuButton_Click"
                                 AutomationProperties.Name="{local:UiText Key='Terminal profiles'}">
-                            <Path Width="8" Height="4" Data="M0,0 L4,4 L8,0" StrokeThickness="1" StrokeLineJoin="Round"
+                            <Path Width="8" Height="4" Data="M0,0 L4,4 L8,0" StrokeThickness="1.2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
                         </Button>
                     </Grid>
@@ -565,7 +568,7 @@
                         Style="{StaticResource WindowCaptionButtonStyle}"
                         ToolTip="{local:UiText Key='Minimize'}" AutomationProperties.Name="{local:UiText Key='Minimize'}"
                         Click="MinimizeButton_Click">
-                    <Path Width="10" Height="10" Data="M0,5 L10,5" StrokeThickness="1"
+                    <Path Width="10" Height="10" Data="M0,5 L10,5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
                 <Button x:Name="MaximizeButton"
@@ -573,7 +576,7 @@
                         Style="{StaticResource WindowCaptionButtonStyle}"
                         ToolTip="{local:UiText Key='Maximize / Restore'}" AutomationProperties.Name="{local:UiText Key='Maximize or restore'}"
                         Click="MaximizeButton_Click">
-                    <Path x:Name="MaximizeGlyph" Width="10" Height="10" Data="M0.5,0.5 L9.5,0.5 9.5,9.5 0.5,9.5 Z" StrokeThickness="1"
+                    <Path x:Name="MaximizeGlyph" Width="10" Height="10" Data="M0.5,0.5 L9.5,0.5 9.5,9.5 0.5,9.5 Z" StrokeThickness="1.2"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
                 <Button Width="46"
@@ -581,7 +584,7 @@
                         Tag="Close"
                         ToolTip="{local:UiText Key='Close window'}" AutomationProperties.Name="{local:UiText Key='Close window'}"
                         Click="CloseWindowButton_Click">
-                    <Path Width="10" Height="10" Data="M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5" StrokeThickness="1"
+                    <Path Width="10" Height="10" Data="M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
             </StackPanel>
@@ -610,6 +613,10 @@
                       Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.3" />
             </Viewbox>
         </Button>
+        <Button x:Name="ZenModeButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="CompactModeMenuItem_Click" ToolTip="{local:UiText Key='Compact mode'}" AutomationProperties.Name="{local:UiText Key='Compact mode'}"><Path Width="11" Height="11" Data="M1,2 L10,2 M1,9 L10,9 M2.5,1 L2.5,10 M8.5,1 L8.5,10" StrokeThickness="1.1" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/></Button>
+        <Button x:Name="QuickThemeButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="ThemeMenuItem_Click" ToolTip="{local:UiText Key='_Theme...'}" AutomationProperties.Name="{local:UiText Key='_Theme...'}"><Path Width="11" Height="11" Data="M1,5.5 C1,3 3,1 5.5,1 C8,1 10,3 10,5.5 C10,7.5 8.5,9 7,9 L6,9 C5.5,9 5,9.5 5,10 C5,10.2 5.1,10.5 5.3,10.7 C2.8,10.5 1,8.5 1,5.5 Z" StrokeThickness="1.1" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Fill="Transparent"/></Button>
+        <Button x:Name="QuickFindButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="FindMenuItem_Click" ToolTip="{local:UiText Key='Find...'}" AutomationProperties.Name="{local:UiText Key='Find...'}"><Path Width="11" Height="11" Data="M4.5,1.5 A3,3 0 1 1 4.5,7.5 A3,3 0 1 1 4.5,1.5 M6.8,6.8 L10,10" StrokeThickness="1.2" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/></Button>
+        <Button x:Name="AiSidecarToggleButton" DockPanel.Dock="Right" Width="28" Height="26" Margin="3,0,0,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiSidecarToggleButton_Click" ToolTip="AI Copilot (Ctrl+\)" AutomationProperties.Name="AI Copilot"><Path Width="12" Height="12" Data="M6,0 L7.5,4.5 L12,6 L7.5,7.5 L6,12 L4.5,7.5 L0,6 L4.5,4.5 Z" Fill="{DynamicResource AccentBrush}" Stretch="Uniform"/></Button>
         <Grid ClipToBounds="True">
         <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Height="28" FontFamily="Segoe UI" FontSize="12"
@@ -669,6 +676,12 @@
                 <MenuItem Header="{local:UiText Key='Full screen'}" InputGestureText="F11" Click="FullScreenMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="{local:UiText Key='_Tools'}">
+                <MenuItem Header="AI Copilot" InputGestureText="Ctrl+\" Click="AiSidecarToggleButton_Click"/>
+                <MenuItem Header="AI Command Generator" InputGestureText="Ctrl+I" Click="AiCommandBarMenuItem_Click"/>
+                <MenuItem Header="Diagnose Error" InputGestureText="Ctrl+Shift+E" Click="AiDiagnoseErrorButton_Click"/>
+                <MenuItem Header="Copy Terminal Context" InputGestureText="Ctrl+Shift+A" Click="AiCopyContextButton_Click"/>
+                <MenuItem Header="AI Settings..." Click="AiSettingsMenuItem_Click"/>
+                <Separator/>
                 <MenuItem Header="{local:UiText Key='_Macros'}" SubmenuOpened="MacroMenu_Opened">
                     <MenuItem x:Name="MacroRecordMenuItem" Header="{local:UiText Key='_Start recording'}" Click="MacroRecord_Click"/>
                     <MenuItem x:Name="MacroStopMenuItem" Header="{local:UiText Key='Stop playback'}" IsEnabled="False" Click="MacroStop_Click"/>
@@ -724,11 +737,12 @@
                 </Style>
             </Button.Style>
             <Grid>
-                <Grid.ColumnDefinitions><ColumnDefinition Width="17"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="17"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/></Grid.ColumnDefinitions>
                 <Path Width="12" Height="10" Opacity="0.8" Stretch="Uniform" Data="M0,2 L0,12 L16,12 L16,4 L8,4 L6,1 L0,1 Z"
                       Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.2" VerticalAlignment="Center"/>
                 <TextBlock x:Name="ActiveDirectoryText" Grid.Column="1" Text="…" FontSize="12" FontWeight="Normal" VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis" FlowDirection="LeftToRight"/>
+                <Border Grid.Column="2" Width="6" Height="6" CornerRadius="3" Background="#10b981" Margin="3,0,0,0" VerticalAlignment="Center" ToolTip="{local:UiText Key='Shell active'}" />
             </Grid>
         </Button>
         </Grid>
@@ -736,6 +750,105 @@
         </Border>
 
         <Grid>
+        <DockPanel LastChildFill="True">
+            <!-- AI Sidecar Dock (Collapsible right panel) -->
+            <Border x:Name="AiSidecarDock"
+                    DockPanel.Dock="Right"
+                    Width="340"
+                    Visibility="Collapsed"
+                    Background="{DynamicResource ToolbarBrush}"
+                    BorderBrush="{DynamicResource ToolbarBorderBrush}"
+                    BorderThickness="1,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Sidecar Header -->
+                    <Border Grid.Row="0" Background="{DynamicResource TitleBarBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}" BorderThickness="0,0,0,1" Padding="10,0">
+                        <Grid VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Width="12" Height="12" Data="M6,0 L7.5,4.5 L12,6 L7.5,7.5 L6,12 L4.5,7.5 L0,6 L4.5,4.5 Z" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                <TextBlock Text="مساعد الطرفية الذكي" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource ChromeStrongForegroundBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Button x:Name="AiSettingsButton" Width="24" Height="24" Margin="2,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiSettingsButton_Click" ToolTip="إعدادات الذكاء الاصطناعي ومفتاح API (AI Settings)">
+                                    <Path Width="11" Height="11" Data="M4.5,0 L5.5,0 L5.7,1.5 C6.1,1.7 6.5,1.9 6.8,2.2 L8.2,1.6 L8.9,2.4 L7.8,3.5 C8,3.9 8.1,4.3 8.1,4.8 L9.6,5.2 L9.6,6.3 L8.1,6.7 C8,7.2 7.8,7.6 7.6,8 L8.6,9.1 L7.9,9.9 L6.5,9.3 C6.2,9.6 5.8,9.8 5.4,10 L5.2,11.5 L4.1,11.5 L3.9,10 C3.5,9.8 3.1,9.6 2.8,9.3 L1.4,9.9 L0.7,9.1 L1.7,8 C1.5,7.6 1.4,7.2 1.3,6.7 L0,6.3 L0,5.2 L1.4,4.8 C1.5,4.3 1.7,3.9 1.9,3.5 L0.9,2.4 L1.6,1.6 L3,2.2 C3.3,1.9 3.7,1.7 4.1,1.5 Z M4.8,3.8 A1.8,1.8 0 1 0 4.8,7.4 A1.8,1.8 0 1 0 4.8,3.8" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.1" Fill="Transparent"/>
+                                </Button>
+                                <Button x:Name="AiClearChatButton" Width="24" Height="24" Margin="2,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiClearChatButton_Click" ToolTip="مسح المحادثة">
+                                    <Path Width="9" Height="9" Data="M1,1 L8,8 M8,1 L1,8" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.2"/>
+                                </Button>
+                                <Button x:Name="AiCloseSidecarButton" Width="24" Height="24" Margin="2,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiCloseSidecarButton_Click" ToolTip="إغلاق (Ctrl+\)">
+                                    <Path Width="8" Height="8" Data="M0.5,0.5 L7.5,7.5 M7.5,0.5 L0.5,7.5" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.2"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Sidecar Quick Actions Toolbar -->
+                    <Border Grid.Row="1" Background="{DynamicResource ToolbarBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}" BorderThickness="0,0,0,1" Padding="8,5">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Button x:Name="AiDiagnoseErrorButton" Height="24" Padding="7,2" Margin="0,0,6,0" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiDiagnoseErrorButton_Click" ToolTip="تشخيص آخر خطأ (Ctrl+Shift+E)">
+                                <TextBlock Text="⚡ تشخيص الخطأ" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold"/>
+                            </Button>
+                            <Button x:Name="AiCopyContextButton" Height="24" Padding="7,2" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiCopyContextButton_Click" ToolTip="نسخ سياق الطرفية بصيغة Markdown (Ctrl+Shift+A)">
+                                <TextBlock Text="📋 نسخ السياق" FontSize="11" Foreground="{DynamicResource ChromeForegroundBrush}"/>
+                            </Button>
+                            <Button x:Name="AiModelBadgeButton" Height="24" Margin="6,0,0,0" Padding="6,2" Style="{StaticResource WindowCaptionButtonStyle}" Click="AiSettingsButton_Click" ToolTip="تغيير مزود الذكاء الاصطناعي والمفتاح">
+                                <TextBlock x:Name="AiActiveModelBadge" Text="⚡ Ollama (llama3)" FontSize="10" Foreground="{DynamicResource AccentBrush}"/>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Chat Messages Host -->
+                    <ScrollViewer x:Name="AiChatScroller" Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="10">
+                        <StackPanel x:Name="AiChatMessagesHost"/>
+                    </ScrollViewer>
+
+                    <!-- Sidecar Input Box -->
+                    <Border Grid.Row="3" Background="{DynamicResource TitleBarBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}" BorderThickness="0,1,0,0" Padding="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="AiSidecarInputBox"
+                                     Grid.Column="0"
+                                     Style="{StaticResource SearchTextBoxStyle}"
+                                     Padding="8,5"
+                                     FontSize="12"
+                                     AcceptsReturn="True"
+                                     MaxHeight="70"
+                                     VerticalScrollBarVisibility="Auto"
+                                     KeyDown="AiSidecarInputBox_KeyDown"
+                                     ToolTip="اكتب استفسارك هنا (اضغط Enter للإرسال، Shift+Enter لسطر جديد)"/>
+                            <Button x:Name="AiSidecarSendButton"
+                                    Grid.Column="1"
+                                    Width="30"
+                                    Height="28"
+                                    Margin="6,0,0,0"
+                                    Background="{DynamicResource AccentBrush}"
+                                    Foreground="{DynamicResource TerminalBackgroundBrush}"
+                                    FontWeight="Bold"
+                                    Cursor="Hand"
+                                    Click="AiSidecarSendButton_Click"
+                                    ToolTip="إرسال">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                                            <Path Width="10" Height="10" Data="M0,0 L10,5 L0,10 L3,5 Z" Fill="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
         <ScrollViewer x:Name="PaneScroller" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                       CanContentScroll="False" Focusable="False" SizeChanged="PaneScroller_SizeChanged" ScrollChanged="PaneScroller_ScrollChanged">
         <Grid x:Name="PaneHost" HorizontalAlignment="Left">
@@ -757,6 +870,7 @@
                      Typography.NumeralAlignment="Tabular" />
         </Grid>
         </ScrollViewer>
+        </DockPanel>
 
         <!-- Floating Search Bar -->
         <Border x:Name="SearchBar"
@@ -766,11 +880,11 @@
                 Background="{DynamicResource MenuBackgroundBrush}"
                 BorderBrush="{DynamicResource MenuBorderBrush}"
                 BorderThickness="1"
-                CornerRadius="6"
+                CornerRadius="8"
                 Padding="6,4"
                 Visibility="Collapsed">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="2" Direction="270" Opacity="0.35" Color="Black" />
+                <DropShadowEffect BlurRadius="16" ShadowDepth="3" Direction="270" Opacity="0.4" Color="Black" />
             </Border.Effect>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Grid Width="180" Height="26" VerticalAlignment="Center" Margin="0,0,6,0">
@@ -808,7 +922,8 @@
                         ToolTip="{local:UiText Key='Previous match'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchPreviousButton_Click">
-                    <TextBlock Text="▲" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="5" Data="M0.5,4.5 L4,1 L7.5,4.5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
                 <Button x:Name="SearchNextButton"
@@ -816,7 +931,8 @@
                         ToolTip="{local:UiText Key='Next match'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchNextButton_Click">
-                    <TextBlock Text="▼" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="5" Data="M0.5,1 L4,4.5 L7.5,1" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
                 <Button x:Name="SearchCloseButton"
@@ -824,10 +940,140 @@
                         ToolTip="{local:UiText Key='Close search'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchCloseButton_Click">
-                    <TextBlock Text="✕" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="8" Data="M1,1 L7,7 M7,1 L1,7" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </StackPanel>
         </Border>
+
+        <!-- Floating AI Natural Language Command Bar (Ctrl+I) -->
+        <Border x:Name="AiCommandBar"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,14,0,0"
+                Width="560"
+                Background="{DynamicResource MenuBackgroundBrush}"
+                BorderBrush="{DynamicResource AccentBrush}"
+                BorderThickness="1.5"
+                CornerRadius="10"
+                Padding="12,10"
+                Visibility="Collapsed">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="22" ShadowDepth="4" Direction="270" Opacity="0.5" Color="Black" />
+            </Border.Effect>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- AI Sparkle Icon -->
+                    <Path Grid.Column="0" Width="14" Height="14" Margin="0,0,8,0" VerticalAlignment="Center"
+                          Data="M7,0 L8.8,5.2 L14,7 L8.8,8.8 L7,14 L5.2,8.8 L0,7 L5.2,5.2 Z" Fill="{DynamicResource AccentBrush}" />
+
+                    <!-- Input Box & Placeholder -->
+                    <Grid Grid.Column="1" VerticalAlignment="Center">
+                        <TextBox x:Name="AiCommandTextBox"
+                                 Style="{StaticResource SearchTextBoxStyle}"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 FontSize="13"
+                                 KeyDown="AiCommandTextBox_KeyDown" />
+                        <TextBlock x:Name="AiCommandPlaceholder"
+                                   Text="اكتب ما تريد فعله باللغة الطبيعية... مثال: اعرض استهلاك الذاكرة"
+                                   Foreground="{DynamicResource MutedForegroundBrush}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="6,0,0,0"
+                                   IsHitTestVisible="False" />
+                    </Grid>
+
+                    <!-- Generate Button -->
+                    <Button x:Name="AiCommandGenerateButton"
+                            Grid.Column="2"
+                            Margin="8,0,4,0"
+                            Padding="10,4"
+                            Height="26"
+                            Background="{DynamicResource AccentBrush}"
+                            Foreground="{DynamicResource TerminalBackgroundBrush}"
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            Cursor="Hand"
+                            Click="AiCommandGenerateButton_Click"
+                            Content="توليد ⚡">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!-- Close Button -->
+                    <Button x:Name="AiCommandCloseButton"
+                            Grid.Column="3"
+                            Width="26" Height="26"
+                            Style="{StaticResource SearchIconButtonStyle}"
+                            Click="AiCommandCloseButton_Click"
+                            ToolTip="إغلاق (Esc)">
+                        <Path Width="8" Height="8" Data="M1,1 L7,7 M7,1 L1,7" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                              Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+
+                <!-- Command Preview Row -->
+                <Border x:Name="AiCommandPreviewRow"
+                        Visibility="Collapsed"
+                        Margin="0,10,0,0"
+                        Padding="10,8"
+                        Background="{DynamicResource TerminalBackgroundBrush}"
+                        BorderBrush="{DynamicResource ToolbarBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="6">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="AiGeneratedCommandText"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource AccentBrush}"
+                                   FontFamily="{x:Static local:BundledFonts.DefaultFamily}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   FlowDirection="LeftToRight"
+                                   Text="" />
+                        <Button x:Name="AiRunCommandButton"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                Padding="12,4"
+                                Height="26"
+                                Background="{DynamicResource AccentBrush}"
+                                Foreground="{DynamicResource TerminalBackgroundBrush}"
+                                FontWeight="Bold"
+                                FontSize="11"
+                                Cursor="Hand"
+                                Click="AiRunCommandButton_Click"
+                                Content="تنفيذ ▷">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+
         </Grid>
     </DockPanel>
     </Border>

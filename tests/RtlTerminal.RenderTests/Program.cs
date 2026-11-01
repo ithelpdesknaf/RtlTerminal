@@ -57,6 +57,7 @@ internal static partial class Program
         CheckDirectoryHistory();
         CheckTerminalSearchAndZoom();
         CheckBundledFonts();
+        AiHarnessTests.Run();
         var view = new TerminalView
         {
             Width = 800, Height = 420, FontFamily = new FontFamily("Consolas"),

@@ -15,6 +15,7 @@ public sealed class MacroEditorWindow : Window
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Background = new SolidColorBrush(Color.FromRgb(244,245,247)); Foreground = new SolidColorBrush(Color.FromRgb(24,32,51));
         FontFamily = new FontFamily("Segoe UI"); FontSize = 13;
+        SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, false);
         var root = new DockPanel { Margin = new Thickness(20) }; Content = root;
         var heading = new StackPanel(); DockPanel.SetDock(heading, Dock.Top); root.Children.Add(heading);
         heading.Children.Add(new TextBlock { Text = UiText.Get("Macro"), FontSize = 24, FontWeight = FontWeights.SemiBold });

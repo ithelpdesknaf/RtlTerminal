@@ -68,6 +68,7 @@ ApplySavedFontSettings();
         UpdateFontMetrics();
         InitializeUiLanguage();
         InitializeWindowStatus();
+        InitializeAiHarness();
         AllowDrop = true;
         PreviewDragOver += Window_PreviewDragOver;
         PreviewDrop += Window_PreviewDrop;
@@ -182,6 +183,7 @@ ApplySavedFontSettings();
         tab.ActivePane = pane;
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         return pane;
     }
 
@@ -296,7 +298,11 @@ ApplySavedFontSettings();
         CleanupTemporaryClipboardFiles();
     }
 
-    private void Window_SourceInitialized(object? sender, EventArgs e) => WindowWorkArea.Attach(this, () => IsFullScreen);
+    private void Window_SourceInitialized(object? sender, EventArgs e)
+    {
+        WindowWorkArea.Attach(this, () => IsFullScreen);
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
+    }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -350,6 +356,12 @@ ApplySavedFontSettings();
 
         var controlPressed = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
         var shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+        if (controlPressed && shiftPressed && GetEffectiveKey(e) == Key.M)
+        {
+            ToggleCompactMode();
+            e.Handled = true;
+            return;
+        }
         var key = GetEffectiveKey(e);
 
         if (controlPressed && (key == Key.OemPlus || key == Key.Add))
@@ -376,6 +388,41 @@ ApplySavedFontSettings();
         if (controlPressed && key == Key.F)
         {
             OpenSearchBar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && !shiftPressed && key == Key.I)
+        {
+            OpenAiCommandBar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && (key == Key.Oem5 || key == Key.OemBackslash))
+        {
+            ToggleAiSidecar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && shiftPressed && key == Key.E)
+        {
+            DiagnoseLastError();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && shiftPressed && key == Key.A)
+        {
+            CopyTerminalContext();
+            e.Handled = true;
+            return;
+        }
+
+        if (key == Key.Escape && AiCommandBar.Visibility == Visibility.Visible)
+        {
+            CloseAiCommandBar();
             e.Handled = true;
             return;
         }
@@ -906,7 +953,7 @@ ApplySavedFontSettings();
 
     private void FontSettingsMenuItem_Click(object sender, RoutedEventArgs e) => ShowSettings(openThemeTab: false);
 
-    private void ShowSettings(bool openThemeTab, bool openMacroTab = false)
+    private void ShowSettings(bool openThemeTab, bool openMacroTab = false, bool openAiTab = false)
     {
         var settingsWindow = new FontSettingsWindow(
             BundledFonts.DisplayName(TerminalTextBox.FontFamily),
@@ -921,6 +968,7 @@ ApplySavedFontSettings();
         if (openThemeTab) settingsWindow.ShowThemeTab();
         settingsWindow.SetDirectoryHistoryEnabled(_directoryHistory.Enabled);
         if (openMacroTab) settingsWindow.ShowMacroTab();
+        if (openAiTab) settingsWindow.ShowAiTab();
 
         if (settingsWindow.ShowDialog() != true)
             return;
@@ -938,6 +986,7 @@ ApplySavedFontSettings();
         _paneShortcuts = settingsWindow.SelectedPaneShortcuts;
         AppSettings.SavePaneShortcuts(_paneShortcuts);
         ApplyColors(settingsWindow.SelectedTheme.Theme, settingsWindow.SelectedTheme.Scheme);
+        RefreshAiModelBadge();
         UpdateShortcutLabels();
         ActiveView.Focus();
     }
@@ -979,6 +1028,7 @@ ApplySavedFontSettings();
     private void RefreshColorViews()
     {
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         foreach (var view in AllViews())
         {
             // Detached views in hidden tabs may retain a previously resolved resource.
@@ -1396,6 +1446,7 @@ ApplySavedFontSettings();
         UpdateSelectedDirectory();
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         RenderVisiblePanes();
         QueueViewportResize();
     }
@@ -1551,6 +1602,7 @@ ApplySavedFontSettings();
         pane.Frame.BringIntoView();
         UpdatePaneFrames();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         if (!pane.View.IsKeyboardFocusWithin)
             pane.View.Focus();
     }
@@ -1596,6 +1648,7 @@ ApplySavedFontSettings();
 
         DetachPane(tab, pane);
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         _ = pane.DisposeAsync();
     }
 
@@ -1638,6 +1691,7 @@ ApplySavedFontSettings();
         _tabs.Remove(source);
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         RenderVisiblePanes();
         QueueViewportResize();
         ActiveView.Focus();
@@ -1668,6 +1722,7 @@ ApplySavedFontSettings();
         if (!_tabs.Contains(tab)) return;
         tab.BackgroundColor = color;
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
     }
 
     private MenuItem CreateTabColorMenu(TerminalTab tab)
@@ -1783,6 +1838,7 @@ ApplySavedFontSettings();
         }
         else
             RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
 
         ActiveView.Focus();
         foreach (var pane in tab.Panes)
@@ -1864,6 +1920,19 @@ ApplySavedFontSettings();
                 Stroke = null, StrokeThickness = 0
             };
             grid.Children.Add(shape);
+            if (isActive)
+            {
+                grid.Children.Add(new Border
+                {
+                    Height = 2.5,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    Margin = new Thickness(14, 0, 14, 0),
+                    CornerRadius = new CornerRadius(1.5),
+                    Background = new SolidColorBrush(AppTheme.TabAccent),
+                    IsHitTestVisible = false
+                });
+            }
             if (!isActive && tab.BackgroundColor is null) grid.Children.Add(new Border
             {
                 Width = 1, Height = 18, Background = new SolidColorBrush(AppTheme.TabSeparator),
@@ -1920,6 +1989,12 @@ ApplySavedFontSettings();
 
         var controlPressed = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
         var shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+        if (controlPressed && shiftPressed && GetEffectiveKey(e) == Key.M)
+        {
+            ToggleCompactMode();
+            e.Handled = true;
+            return;
+        }
 
         if (controlPressed && shiftPressed && e.Key == Key.C)
         {

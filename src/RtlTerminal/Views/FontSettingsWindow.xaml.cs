@@ -52,6 +52,7 @@ public partial class FontSettingsWindow : Window
         InitializeComponent();
         InitializeMacroSettings();
         InitializeDirectoryHistorySettings();
+        InitializeAiSettings();
         _fontFamilies = BundledFonts.Names.Concat(Fonts.SystemFontFamilies
             .Select(font => font.Source)
             .Select(BundledFonts.CanonicalName))
@@ -83,6 +84,7 @@ public partial class FontSettingsWindow : Window
         RefreshFontList();
         ThemeListBox.ItemsSource = ThemeOption.All;
         ThemeListBox.SelectedItem = ThemeOption.All.First(t => t.Theme == AppTheme.Current && t.Scheme == AppTheme.Scheme);
+        SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, false);
     }
 
     public ThemeOption SelectedTheme { get; private set; } = ThemeOption.All[0];
@@ -235,6 +237,7 @@ public partial class FontSettingsWindow : Window
         SelectedHistorySize = GetHistorySize();
         SelectedPreviewScope = (HtmlPreviewScope)Math.Max(0, PreviewScopeComboBox.SelectedIndex);
         SelectedPaneShortcuts = new(SplitShortcutCheckBox.IsChecked == true, NavigateShortcutCheckBox.IsChecked == true, CloseShortcutCheckBox.IsChecked == true);
+        SaveAiSettings();
         DialogResult = true;
     }
 

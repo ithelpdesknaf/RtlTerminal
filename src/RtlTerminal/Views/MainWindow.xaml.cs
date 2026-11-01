@@ -68,6 +68,7 @@ ApplySavedFontSettings();
         UpdateFontMetrics();
         InitializeUiLanguage();
         InitializeWindowStatus();
+        InitializeAiHarness();
         AllowDrop = true;
         PreviewDragOver += Window_PreviewDragOver;
         PreviewDrop += Window_PreviewDrop;
@@ -387,6 +388,41 @@ ApplySavedFontSettings();
         if (controlPressed && key == Key.F)
         {
             OpenSearchBar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && !shiftPressed && key == Key.I)
+        {
+            OpenAiCommandBar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && (key == Key.Oem5 || key == Key.OemBackslash))
+        {
+            ToggleAiSidecar();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && shiftPressed && key == Key.E)
+        {
+            DiagnoseLastError();
+            e.Handled = true;
+            return;
+        }
+
+        if (controlPressed && shiftPressed && key == Key.A)
+        {
+            CopyTerminalContext();
+            e.Handled = true;
+            return;
+        }
+
+        if (key == Key.Escape && AiCommandBar.Visibility == Visibility.Visible)
+        {
+            CloseAiCommandBar();
             e.Handled = true;
             return;
         }

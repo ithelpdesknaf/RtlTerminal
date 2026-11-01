@@ -953,7 +953,7 @@ ApplySavedFontSettings();
 
     private void FontSettingsMenuItem_Click(object sender, RoutedEventArgs e) => ShowSettings(openThemeTab: false);
 
-    private void ShowSettings(bool openThemeTab, bool openMacroTab = false)
+    private void ShowSettings(bool openThemeTab, bool openMacroTab = false, bool openAiTab = false)
     {
         var settingsWindow = new FontSettingsWindow(
             BundledFonts.DisplayName(TerminalTextBox.FontFamily),
@@ -968,6 +968,7 @@ ApplySavedFontSettings();
         if (openThemeTab) settingsWindow.ShowThemeTab();
         settingsWindow.SetDirectoryHistoryEnabled(_directoryHistory.Enabled);
         if (openMacroTab) settingsWindow.ShowMacroTab();
+        if (openAiTab) settingsWindow.ShowAiTab();
 
         if (settingsWindow.ShowDialog() != true)
             return;
@@ -985,6 +986,7 @@ ApplySavedFontSettings();
         _paneShortcuts = settingsWindow.SelectedPaneShortcuts;
         AppSettings.SavePaneShortcuts(_paneShortcuts);
         ApplyColors(settingsWindow.SelectedTheme.Theme, settingsWindow.SelectedTheme.Scheme);
+        RefreshAiModelBadge();
         UpdateShortcutLabels();
         ActiveView.Focus();
     }

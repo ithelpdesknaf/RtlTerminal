@@ -11,9 +11,25 @@ namespace RtlTerminal;
 
 public partial class MainWindow
 {
-    private static void InitializeAiHarness()
+    private void InitializeAiHarness()
     {
-        // Ready for AI interactions
+        RefreshAiModelBadge();
+    }
+
+    private void AiSettingsButton_Click(object sender, RoutedEventArgs e) => OpenAiSettings();
+    private void AiSettingsMenuItem_Click(object sender, RoutedEventArgs e) => OpenAiSettings();
+
+    public void OpenAiSettings()
+    {
+        ShowSettings(openThemeTab: false, openMacroTab: false, openAiTab: true);
+        RefreshAiModelBadge();
+    }
+
+    private void RefreshAiModelBadge()
+    {
+        if (AiActiveModelBadge is null) return;
+        var config = AiConfig.Load();
+        AiActiveModelBadge.Text = $"⚡ {config.Provider} ({config.Model})";
     }
 
     private static string[] ExtractTerminalLines(TerminalSnapshot? snapshot)

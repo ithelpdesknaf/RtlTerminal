@@ -95,6 +95,22 @@ public static class AiService
         }
     }
 
+    public static async Task<(bool Success, string Message)> TestConnectionAsync(AiConfig config)
+    {
+        try
+        {
+            var prompt = "Ping test. Please reply with: OK";
+            var reply = await CallLlmAsync(config, "You are an API connection verifier. Respond strictly with 'OK'.", prompt);
+            if (!string.IsNullOrWhiteSpace(reply))
+                return (true, $"✓ تم الاتصال بنجاح بالنموذج {config.Model}!");
+            return (false, "لم يتم استلام رد من المزود.");
+        }
+        catch (Exception ex)
+        {
+            return (false, $"فشل الاتصال: {ex.Message}");
+        }
+    }
+
     private static async Task<string> CallLlmAsync(AiConfig config, string systemPrompt, string prompt)
     {
         if (config.Provider.Equals("Ollama", StringComparison.OrdinalIgnoreCase))

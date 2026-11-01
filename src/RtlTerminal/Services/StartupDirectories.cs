@@ -22,7 +22,9 @@ public static class StartupDirectories
 
     private static string? Existing(string? directory)
     {
-        if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory)) return null;
+        if (string.IsNullOrWhiteSpace(directory)) return null;
+        directory = directory.Trim().TrimEnd('"');
+        if (!Directory.Exists(directory)) return null;
         try { return Path.GetFullPath(directory); }
         catch (Exception e) when (e is ArgumentException or NotSupportedException or PathTooLongException) { return null; }
     }

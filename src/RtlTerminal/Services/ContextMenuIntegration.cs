@@ -61,8 +61,9 @@ public static class ContextMenuIntegration
         shellKey.SetValue("Icon", executablePath);
 
         using var commandKey = shellKey.CreateSubKey("command");
+        var placeholder = pathPlaceholder == "%V" ? "%V." : pathPlaceholder;
         commandKey.SetValue(
             null,
-            $"\"{executablePath}\" \"{pathPlaceholder}\"");
+            $"{ShellPath.WindowsArgument(executablePath)} \"{placeholder}\"");
     }
 }

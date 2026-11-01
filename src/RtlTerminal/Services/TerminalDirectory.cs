@@ -17,7 +17,21 @@ internal static class TerminalDirectory
         }
         if (distribution is not null && value.StartsWith('/'))
             value = @"\\wsl.localhost\" + distribution + value.Replace('/', '\\');
-        return Path.IsPathFullyQualified(value) && !value.Any(char.IsControl) ? value : null;
+
+        if (!Path.IsPathFullyQualified(value) || value.Any(char.IsControl))
+            return null;
+
+        if (value.StartsWith(@"\\", StringComparison.Ordinal) || value.StartsWith("//", StringComparison.Ordinal))
+        {
+            var normalized = value.Replace('/', '\\');
+            if (!normalized.StartsWith(@"\\wsl.localhost\", StringComparison.OrdinalIgnoreCase) &&
+                !normalized.StartsWith(@"\\wsl$\", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+        }
+
+        return value;
     }
 
     public static async Task<string?> ReadWslAsync(string sessionId, string? distribution)

@@ -451,7 +451,13 @@ public sealed partial class TerminalBuffer
         {
             case 7:
                 if (Uri.TryCreate(value, UriKind.Absolute, out var location) && location.IsFile)
-                    _workingDirectory = value;
+                {
+                    if (string.IsNullOrEmpty(location.Host) ||
+                        location.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _workingDirectory = value;
+                    }
+                }
                 return;
             case 8:
                 // The first semicolon separates optional parameters (including id)
@@ -465,7 +471,19 @@ public sealed partial class TerminalBuffer
                 return;
             case 9:
                 if (value.StartsWith("9;", StringComparison.Ordinal))
-                    _workingDirectory = value[2..].Trim('"');
+                {
+                    var dir = value[2..].Trim('"');
+                    if (dir.StartsWith(@"\\", StringComparison.Ordinal) || dir.StartsWith("//", StringComparison.Ordinal))
+                    {
+                        var normalized = dir.Replace('/', '\\');
+                        if (!normalized.StartsWith(@"\\wsl.localhost\", StringComparison.OrdinalIgnoreCase) &&
+                            !normalized.StartsWith(@"\\wsl$\", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return;
+                        }
+                    }
+                    _workingDirectory = dir;
+                }
                 return;
             case 4:
                 // OSC 4 normally contains a palette index before the query.
@@ -519,9 +537,24 @@ public sealed partial class TerminalBuffer
 
         var capability = payload[2..];
 
-        if (capability.Length > 0)
-            QueueResponse($"\x1bP0+r{capability}\x1b\\");
+        // XTGETTCAP capability query tokens must be valid hexadecimal strings separated by semicolons (CWE-78 / CWE-116).
+        if (string.IsNullOrEmpty(capability) || capability.Length > 256)
+            return;
+
+        foreach (var ch in capability)
+        {
+            if (!IsHexOrSemicolon(ch))
+                return;
+        }
+
+        QueueResponse($"\x1bP0+r{capability}\x1b\\");
     }
+
+    private static bool IsHexOrSemicolon(char ch) =>
+        (ch >= '0' && ch <= '9') ||
+        (ch >= 'a' && ch <= 'f') ||
+        (ch >= 'A' && ch <= 'F') ||
+        ch == ';';
 
     private static string FormatOscColor(TerminalColor color) =>
         $"rgb:{color.Red:x2}{color.Red:x2}/" +

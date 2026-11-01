@@ -89,6 +89,10 @@ jobs:
         shell: pwsh
         run: |
           Invoke-WebRequest https://aka.ms/wingetcreate/latest -OutFile artifacts/winget/wingetcreate.exe
+          $sig = Get-AuthenticodeSignature artifacts/winget/wingetcreate.exe
+          if ($sig.Status -ne 'Valid' -or $sig.SignerCertificate.Subject -notmatch 'Microsoft Corporation') {
+            throw "Authenticode signature verification failed for wingetcreate.exe (Status: $($sig.Status))"
+          }
           & ./artifacts/winget/wingetcreate.exe submit --no-open --prtitle "New version: behnamapps.RtlTerminal version $env:VERSION" "artifacts/winget/manifests/b/behnamapps/RtlTerminal/$env:VERSION"
           if ($LASTEXITCODE -ne 0) { throw 'WinGet pull request submission failed.' }
           'WinGet submission sent. Availability requires approval by winget-pkgs.' >> $env:GITHUB_STEP_SUMMARY

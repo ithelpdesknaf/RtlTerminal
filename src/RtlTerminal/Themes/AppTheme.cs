@@ -81,13 +81,13 @@ public static class AppTheme
     internal static TerminalColor DefaultAnsiForeground(AppThemeKind theme, int index) =>
         theme == AppThemeKind.Light ? LightForegrounds[index] : ColorScheme.Find("Campbell")!.Text(index);
 
-    public static Color TabAccent => IsLight ? Rgb(15, 118, 110) : Rgb(114, 214, 197);
-    public static Color TabIcon => IsLight ? Rgb(101, 109, 118) : Rgb(139, 148, 158);
-    public static Color ActiveTabText => IsLight ? Rgb(31, 35, 40) : Rgb(240, 244, 248);
-    public static Color InactiveTabText => IsLight ? Rgb(87, 96, 106) : Rgb(165, 174, 184);
-    public static Color ActiveTab => IsLight ? Rgb(246, 248, 250) : Rgb(48, 49, 52);
-    public static Color HoverTab => IsLight ? Rgb(215, 220, 226) : Rgb(42, 43, 47);
-    public static Color TabSeparator => IsLight ? Rgb(175, 184, 193) : Rgb(78, 80, 84);
+    public static Color TabAccent => IsLight ? Rgb(13, 148, 136) : Rgb(45, 212, 191);
+    public static Color TabIcon => IsLight ? Rgb(101, 109, 118) : Rgb(156, 163, 175);
+    public static Color ActiveTabText => IsLight ? Rgb(31, 35, 40) : Rgb(248, 250, 252);
+    public static Color InactiveTabText => IsLight ? Rgb(87, 96, 106) : Rgb(156, 163, 175);
+    public static Color ActiveTab => IsLight ? Rgb(246, 248, 250) : Rgb(30, 31, 36);
+    public static Color HoverTab => IsLight ? Rgb(215, 220, 226) : Rgb(38, 40, 48);
+    public static Color TabSeparator => IsLight ? Rgb(175, 184, 193) : Rgb(48, 50, 60);
     public static Color CursorFill => IsLight ? Color.FromArgb(90, 36, 41, 47) : Color.FromArgb(90, 230, 230, 230);
     public static Color ScrollTrack => IsLight ? Color.FromArgb(10, 0, 0, 0) : Color.FromArgb(14, 255, 255, 255);
     public static Color ScrollThumb => IsLight ? Color.FromArgb(105, 0, 0, 0) : Color.FromArgb(100, 255, 255, 255);
@@ -113,29 +113,30 @@ public static class AppTheme
 
         Set("TerminalBackgroundBrush", 12, 12, 12, 255, 255, 255);
         Set("TerminalForegroundBrush", 230, 230, 230, 36, 41, 47);
-        Set("TitleBarBrush", 32, 33, 36, 222, 226, 231);
-        Set("ToolbarBrush", 48, 49, 52, 246, 248, 250);
-        Set("TabRenameBackgroundBrush", 24, 25, 28, 255, 255, 255);
-        Set("DirectoryBadgeBrush", 39, 40, 43, 233, 236, 240);
-        Set("DirectoryBadgeHoverBrush", 42, 43, 46, 230, 233, 237);
-        Set("DirectoryBadgeForegroundBrush", 198, 203, 210, 78, 87, 98);
-        Set("ToolbarBorderBrush", 60, 64, 67, 208, 215, 222);
-        Set("ChromeForegroundBrush", 240, 240, 240, 31, 35, 40);
+        Set("TitleBarBrush", 24, 24, 28, 222, 226, 231);
+        Set("ToolbarBrush", 30, 31, 36, 246, 248, 250);
+        Set("TabRenameBackgroundBrush", 20, 20, 24, 255, 255, 255);
+        Set("DirectoryBadgeBrush", 36, 38, 46, 233, 236, 240);
+        Set("DirectoryBadgeHoverBrush", 46, 48, 58, 225, 229, 234);
+        Set("DirectoryBadgeForegroundBrush", 103, 232, 249, 14, 116, 144);
+        Set("ToolbarBorderBrush", 44, 46, 54, 208, 215, 222);
+        Set("ChromeForegroundBrush", 230, 232, 238, 31, 35, 40);
         Set("ChromeStrongForegroundBrush", 255, 255, 255, 0, 0, 0);
-        Set("MutedForegroundBrush", 139, 148, 158, 87, 96, 106);
-        Set("AccentBrush", 114, 214, 197, 15, 118, 110);
-        Set("FocusBrush", 168, 199, 250, 11, 87, 208);
-        Set("MenuBackgroundBrush", 37, 37, 38, 255, 255, 255);
-        Set("MenuBorderBrush", 63, 63, 70, 208, 215, 222);
-        Set("MenuHighlightBrush", 58, 58, 58, 234, 238, 242);
-        Set("MenuOpenBrush", 65, 65, 65, 220, 225, 230);
-        Set("SeparatorBrush", 69, 70, 74, 216, 222, 228);
-        Set("CaptionHoverBrush", 64, 64, 64, 205, 210, 216);
-        Set("CaptionPressedBrush", 80, 80, 80, 190, 196, 203);
-        Set("ButtonPressedBrush", 70, 70, 70, 208, 215, 222);
-        Set("RoundButtonHoverBrush", 64, 65, 69, 205, 210, 216);
-        Set("RoundButtonPressedBrush", 81, 82, 86, 190, 196, 203);
-        Set("RoundButtonFocusBrush", 69, 79, 96, 196, 214, 240);
+        Set("MutedForegroundBrush", 156, 163, 175, 87, 96, 106);
+        Set("AccentBrush", 45, 212, 191, 13, 148, 136);
+        Set("FocusBrush", 56, 189, 248, 11, 87, 208);
+        Set("MenuBackgroundBrush", 28, 29, 34, 255, 255, 255);
+        Set("MenuBorderBrush", 48, 50, 60, 208, 215, 222);
+        Set("MenuHighlightBrush", 42, 44, 54, 234, 238, 242);
+        Set("MenuOpenBrush", 48, 50, 62, 220, 225, 230);
+        Set("SeparatorBrush", 46, 48, 58, 216, 222, 228);
+        Set("CaptionHoverBrush", 44, 46, 56, 205, 210, 216);
+        Set("CaptionPressedBrush", 56, 58, 70, 190, 196, 203);
+        Set("ButtonPressedBrush", 50, 52, 64, 208, 215, 222);
+        Set("RoundButtonHoverBrush", 44, 46, 56, 205, 210, 216);
+        Set("RoundButtonPressedBrush", 56, 58, 70, 190, 196, 203);
+        Set("RoundButtonFocusBrush", 45, 212, 191, 196, 214, 240);
+        Set("WindowBorderBrush", 48, 50, 58, 208, 215, 222);
 
         if (scheme is not null)
         {

@@ -9,6 +9,7 @@ public partial class UpdateAvailableWindow : Window
         Version latestVersion)
     {
         InitializeComponent();
+        SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, false);
         VersionTextBlock.Text = UiText.Format("Installed: {0}    Available: {1}", FormatVersion(currentVersion), FormatVersion(latestVersion));
     }
 

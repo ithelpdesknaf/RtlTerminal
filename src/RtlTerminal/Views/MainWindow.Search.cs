@@ -243,7 +243,7 @@ public partial class MainWindow
         var currentSize = TerminalTextBox.FontSize;
         var newSize = Math.Clamp(currentSize + delta, 8, 48);
         if (Math.Abs(newSize - currentSize) < 0.01) return;
-        _zoomReflowDue = Environment.TickCount64 + 180;
+        _zoomReflowDue = Environment.TickCount64 + 400;
         ApplyFontSettings(new TerminalFontSettings(
             BundledFonts.DisplayName(TerminalTextBox.FontFamily),
             newSize,
@@ -255,7 +255,7 @@ public partial class MainWindow
     {
         var saved = AppSettings.LoadFont();
         var defaultSize = Math.Clamp(saved?.Size ?? 14.0, 8, 48);
-        _zoomReflowDue = Environment.TickCount64 + 180;
+        _zoomReflowDue = Environment.TickCount64 + 400;
         ApplyFontSettings(new TerminalFontSettings(
             BundledFonts.DisplayName(TerminalTextBox.FontFamily),
             defaultSize,

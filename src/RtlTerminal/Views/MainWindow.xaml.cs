@@ -182,6 +182,7 @@ ApplySavedFontSettings();
         tab.ActivePane = pane;
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         return pane;
     }
 
@@ -296,7 +297,11 @@ ApplySavedFontSettings();
         CleanupTemporaryClipboardFiles();
     }
 
-    private void Window_SourceInitialized(object? sender, EventArgs e) => WindowWorkArea.Attach(this, () => IsFullScreen);
+    private void Window_SourceInitialized(object? sender, EventArgs e)
+    {
+        WindowWorkArea.Attach(this, () => IsFullScreen);
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
+    }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -979,6 +984,7 @@ ApplySavedFontSettings();
     private void RefreshColorViews()
     {
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         foreach (var view in AllViews())
         {
             // Detached views in hidden tabs may retain a previously resolved resource.
@@ -1396,6 +1402,7 @@ ApplySavedFontSettings();
         UpdateSelectedDirectory();
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         RenderVisiblePanes();
         QueueViewportResize();
     }
@@ -1551,6 +1558,7 @@ ApplySavedFontSettings();
         pane.Frame.BringIntoView();
         UpdatePaneFrames();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         if (!pane.View.IsKeyboardFocusWithin)
             pane.View.Focus();
     }
@@ -1596,6 +1604,7 @@ ApplySavedFontSettings();
 
         DetachPane(tab, pane);
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         _ = pane.DisposeAsync();
     }
 
@@ -1638,6 +1647,7 @@ ApplySavedFontSettings();
         _tabs.Remove(source);
         LayoutPanes();
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
         RenderVisiblePanes();
         QueueViewportResize();
         ActiveView.Focus();
@@ -1668,6 +1678,7 @@ ApplySavedFontSettings();
         if (!_tabs.Contains(tab)) return;
         tab.BackgroundColor = color;
         RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
     }
 
     private MenuItem CreateTabColorMenu(TerminalTab tab)
@@ -1783,6 +1794,7 @@ ApplySavedFontSettings();
         }
         else
             RebuildTabStrip();
+        ModernWindowChrome.Apply(this, !AppTheme.IsLight);
 
         ActiveView.Focus();
         foreach (var pane in tab.Panes)

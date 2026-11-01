@@ -101,7 +101,7 @@
                                         Background="{DynamicResource MenuBackgroundBrush}"
                                         BorderBrush="{DynamicResource MenuBorderBrush}"
                                         BorderThickness="1"
-                                        CornerRadius="6">
+                                        CornerRadius="8">
                                     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                                   HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -175,7 +175,7 @@
                                         Background="{DynamicResource MenuBackgroundBrush}"
                                         BorderBrush="{DynamicResource MenuBorderBrush}"
                                         BorderThickness="1"
-                                        CornerRadius="6">
+                                        CornerRadius="8">
                                     <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                                   HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -233,7 +233,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6">
+                                CornerRadius="8">
                             <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Disabled" MaxHeight="480">
                                 <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -487,16 +487,19 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border x:Name="WindowFrame">
+    <Border x:Name="WindowFrame" BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="1">
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="BorderThickness" Value="1" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                         <Setter Property="Padding" Value="8,8,8,12" />
+                        <Setter Property="BorderThickness" Value="0" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding IsFullScreen, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
                         <Setter Property="Padding" Value="0" />
+                        <Setter Property="BorderThickness" Value="0" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -543,14 +546,14 @@
                         <Button x:Name="NewTabButton" ToolTip="{local:UiText Key='New terminal (Ctrl+Shift+T)'}"
                                 Style="{StaticResource ProfileActionSegmentStyle}" Click="NewTabButton_Click"
                                 AutomationProperties.Name="{local:UiText Key='New terminal'}">
-                            <Path Width="10" Height="10" Data="M5,0 L5,10 M0,5 L10,5" StrokeThickness="1"
+                            <Path Width="10" Height="10" Data="M5,0 L5,10 M0,5 L10,5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
                         </Button>
                         <Border Grid.Column="1" Width="1" HorizontalAlignment="Left" Margin="0,6" Background="{DynamicResource ToolbarBorderBrush}" IsHitTestVisible="False"/>
                         <Button x:Name="ProfileMenuButton" Grid.Column="1" ToolTip="{local:UiText Key='Terminal profiles'}"
                                 Style="{StaticResource ProfileActionSegmentStyle}" Click="ProfileMenuButton_Click"
                                 AutomationProperties.Name="{local:UiText Key='Terminal profiles'}">
-                            <Path Width="8" Height="4" Data="M0,0 L4,4 L8,0" StrokeThickness="1" StrokeLineJoin="Round"
+                            <Path Width="8" Height="4" Data="M0,0 L4,4 L8,0" StrokeThickness="1.2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
                         </Button>
                     </Grid>
@@ -565,7 +568,7 @@
                         Style="{StaticResource WindowCaptionButtonStyle}"
                         ToolTip="{local:UiText Key='Minimize'}" AutomationProperties.Name="{local:UiText Key='Minimize'}"
                         Click="MinimizeButton_Click">
-                    <Path Width="10" Height="10" Data="M0,5 L10,5" StrokeThickness="1"
+                    <Path Width="10" Height="10" Data="M0,5 L10,5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
                 <Button x:Name="MaximizeButton"
@@ -573,7 +576,7 @@
                         Style="{StaticResource WindowCaptionButtonStyle}"
                         ToolTip="{local:UiText Key='Maximize / Restore'}" AutomationProperties.Name="{local:UiText Key='Maximize or restore'}"
                         Click="MaximizeButton_Click">
-                    <Path x:Name="MaximizeGlyph" Width="10" Height="10" Data="M0.5,0.5 L9.5,0.5 9.5,9.5 0.5,9.5 Z" StrokeThickness="1"
+                    <Path x:Name="MaximizeGlyph" Width="10" Height="10" Data="M0.5,0.5 L9.5,0.5 9.5,9.5 0.5,9.5 Z" StrokeThickness="1.2"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
                 <Button Width="46"
@@ -581,7 +584,7 @@
                         Tag="Close"
                         ToolTip="{local:UiText Key='Close window'}" AutomationProperties.Name="{local:UiText Key='Close window'}"
                         Click="CloseWindowButton_Click">
-                    <Path Width="10" Height="10" Data="M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5" StrokeThickness="1"
+                    <Path Width="10" Height="10" Data="M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Button>
             </StackPanel>
@@ -766,11 +769,11 @@
                 Background="{DynamicResource MenuBackgroundBrush}"
                 BorderBrush="{DynamicResource MenuBorderBrush}"
                 BorderThickness="1"
-                CornerRadius="6"
+                CornerRadius="8"
                 Padding="6,4"
                 Visibility="Collapsed">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="2" Direction="270" Opacity="0.35" Color="Black" />
+                <DropShadowEffect BlurRadius="16" ShadowDepth="3" Direction="270" Opacity="0.4" Color="Black" />
             </Border.Effect>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Grid Width="180" Height="26" VerticalAlignment="Center" Margin="0,0,6,0">
@@ -808,7 +811,8 @@
                         ToolTip="{local:UiText Key='Previous match'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchPreviousButton_Click">
-                    <TextBlock Text="▲" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="5" Data="M0.5,4.5 L4,1 L7.5,4.5" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
                 <Button x:Name="SearchNextButton"
@@ -816,7 +820,8 @@
                         ToolTip="{local:UiText Key='Next match'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchNextButton_Click">
-                    <TextBlock Text="▼" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="5" Data="M0.5,1 L4,4.5 L7.5,1" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
                 <Button x:Name="SearchCloseButton"
@@ -824,7 +829,8 @@
                         ToolTip="{local:UiText Key='Close search'}"
                         Style="{StaticResource SearchIconButtonStyle}"
                         Click="SearchCloseButton_Click">
-                    <TextBlock Text="✕" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Path Width="8" Height="8" Data="M1,1 L7,7 M7,1 L1,7" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </StackPanel>
         </Border>

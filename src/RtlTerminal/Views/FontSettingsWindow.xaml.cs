@@ -83,6 +83,7 @@ public partial class FontSettingsWindow : Window
         RefreshFontList();
         ThemeListBox.ItemsSource = ThemeOption.All;
         ThemeListBox.SelectedItem = ThemeOption.All.First(t => t.Theme == AppTheme.Current && t.Scheme == AppTheme.Scheme);
+        SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, false);
     }
 
     public ThemeOption SelectedTheme { get; private set; } = ThemeOption.All[0];

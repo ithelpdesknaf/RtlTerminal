@@ -32,6 +32,7 @@ public partial class GuideWindow : Window
     public GuideWindow()
     {
         InitializeComponent();
+        SourceInitialized += (_, _) => ModernWindowChrome.Apply(this, true);
         ApplyLanguage(UiText.Current switch { UiLanguage.Arabic => GuideLanguage.Arabic, UiLanguage.Persian => GuideLanguage.Persian, _ => GuideLanguage.English });
     }
 
